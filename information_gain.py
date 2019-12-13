@@ -32,7 +32,7 @@ for i in features:
         if cmath.isnan(I):
             I = 0
 
-        out_row = (list(row), round(tot/full_tot, 3), round(I.real, 3))
+        out_row = [list(row), round(tot/full_tot, 3), round(I.real, 3)]
         out.append(out_row)
 
     E = []
@@ -40,6 +40,9 @@ for i in features:
         E.append(out[x][1] * out[x][2])
         Entropy = round(sum(E), 3)
 
+        Gain = tot_I - Entropy
+        vals = [Entropy, round(Gain.real, 3)]
 
-# print(
-#     f'Data: {list(row)} I(pi, ni): {round(I.real, 3)}  I(p,i): {round(tot_I.real, 3)}')
+    out.append(vals)
+    print(
+        f'For Feature {i}, Entropy is {out[-1:][0][0]} and Gain is {out[-1:][0][1]}')
