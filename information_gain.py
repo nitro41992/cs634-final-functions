@@ -38,11 +38,14 @@ for i in features:
     E = []
     for x in range(len(out)):
         E.append(out[x][1] * out[x][2])
-        Entropy = round(sum(E), 3)
+        print(
+            f'For Feature {i} Type {x + 1}, p = {out[x][0][1]} and n = {out[x][0][2]}  the Information Gain is {out[x][2]}')
 
-        Gain = tot_I - Entropy
-        vals = [Entropy, round(Gain.real, 3)]
+    Entropy = round(sum(E), 3)
+    Gain = tot_I - Entropy
+    vals = [Entropy, round(Gain.real, 3)]
 
     out.append(vals)
+
     print(
-        f'For Feature {i}, Entropy is {out[-1:][0][0]} and Gain is {out[-1:][0][1]}')
+        f'For Feature {i}, Entropy is {out[-1:][0][0]} and Gain is {out[-1:][0][1]} \n')
