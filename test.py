@@ -21,10 +21,3 @@ for i in features:
         I = -(p / row_tot)*(cmath.log(p/row_tot, 2)) - \
             (n / row_tot)*(cmath.log(n/row_tot, 2))
         print(f'{list(row)},{round(I.real, 3)}')
-
-p = sub.sum()[1]
-n = sub.sum()[2]
-row_tot = p + n
-tot_I = -(p / row_tot)*(cmath.log(p/row_tot, 2)) - \
-    (n / row_tot)*(cmath.log(n/row_tot, 2))
-print(round(I.real, 3))
