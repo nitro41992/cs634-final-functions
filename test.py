@@ -25,4 +25,5 @@ for i, row in data.iterrows():
 dists = pd.DataFrame(df, columns=['x', 'y', 'Distance'])
 
 sorted_dists = dists.sort_values(by=['Distance'])
-print(sorted_dists)
+dist_dists = sorted_dists.drop_duplicates('Distance')
+print(dist_dists)
