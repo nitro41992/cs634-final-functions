@@ -98,7 +98,7 @@ def apriori(filename, min_supp, min_conf):
         prev_count = check_support(updated_combs, data_list, min_supp)[1]
 
         # Writing supports to csv
-        to_csv(f'supports-{filename}.csv', supports,
+        to_csv(f'supports-{filename}', supports,
                fieldnames=['Itemset', 'Support(%)'])
 
         print(f'Calculating confidences for itemsets of {c}...')
@@ -145,7 +145,7 @@ def apriori(filename, min_supp, min_conf):
                                     {f'{perms[i][:j]} -> {perms[i][j:]}': confidence})
 
         # Writing confidences to csv
-        to_csv(f'confidences-{filename}.csv', confidences,
+        to_csv(f'confidences-{filename}', confidences,
                fieldnames=['Association', 'Confidence(%)'])
 
         if prev_count - break_count == 0 or c == max_length:

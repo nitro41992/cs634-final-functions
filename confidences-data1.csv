@@ -1,0 +1,5 @@
+Association,Confidence(%)
+"('Child',) -> ('Therapy',)",75.0
+"('Therapy',) -> ('Child',)",75.0
+"('Psychology',) -> ('Child',)",75.0
+"('Psychology',) -> ('Dream',)",75.0

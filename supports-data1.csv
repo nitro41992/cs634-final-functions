@@ -1,0 +1,9 @@
+Itemset,Support(%)
+Behavior,3
+Child,4
+Therapy,4
+Dream,4
+Psychology,5
+"('Child', 'Therapy')",3
+"('Child', 'Psychology')",3
+"('Dream', 'Psychology')",3
