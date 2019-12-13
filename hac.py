@@ -2,6 +2,8 @@ import pandas as pd
 import math
 from scipy.spatial.distance import cdist
 import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import cm
 
 
 data = pd.read_csv('hac_data.txt')
@@ -36,9 +38,15 @@ dist_dists = sorted_dists.drop_duplicates('distance').reset_index(drop=True)
 # print(groups)
 
 df_groups = dists = pd.DataFrame(groups, columns=['point', 'group'])
-# print(dist_dists)
-# print(df_groups)
+print(dist_dists)
+print(df_groups)
+color = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080',
+         '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff', '#000000']
 
+plt.figure(figsize=(18, 20))
+plt.scatter(data['x'], data['y'], color=np.array(
+    color)[df_groups['group'].values])
+plt.show()
 
 # while df_groups.nunique(0)['group'] > 2:
 for l, d_row in dist_dists.iterrows():
@@ -46,8 +54,8 @@ for l, d_row in dist_dists.iterrows():
     x = df_groups.loc[df_groups['point'] == a[0], 'group'].values
     y = df_groups.loc[df_groups['point'] == a[1], 'group'].values
     # print(l)
-    print(
-        f'a[0] = {a[0]} pos of a[0] = {x[0]} a[1] = {a[1]}  pos of a[1] = {y[0]}')
+    # print(
+    #     f'a[0] = {a[0]} pos of a[0] = {x[0]} a[1] = {a[1]}  pos of a[1] = {y[0]}')
 
     if x[0] > y[0]:
         df_groups.loc[df_groups['point'] == a[1], 'group'] = x[0]
@@ -59,8 +67,11 @@ for l, d_row in dist_dists.iterrows():
         df_groups['group'] = np.where(
             df_groups['group'] == x[0], y[0], df_groups['group'])
 
-    if df_groups.nunique(0)['group'] <= 2:
+    if df_groups.nunique(0)['group'] < 2:
         break
 
-
-print(df_groups)
+    print(df_groups)
+    plt.figure(figsize=(18, 20))
+    plt.scatter(data['x'], data['y'], color=np.array(
+        color)[df_groups['group'].values])
+    plt.show()
