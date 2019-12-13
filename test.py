@@ -1,23 +1,28 @@
-import sys
-import cmath
-import csv
 import pandas as pd
+import math
+from scipy.spatial.distance import cdist
+import numpy as np
 
 
-data = pd.read_csv('data.txt', header=None)
+data = pd.read_csv('hac_data.txt')
 # print(data)
-features = data[0].unique()
-# print(features)
 
-for i in features:
-    grouped = data.groupby(data.columns[0])
-    sub = grouped.get_group(i)
+df = []
+for i, row in data.iterrows():
+    for j, row in data.iterrows():
+        x = data.iloc[i].values
+        y = data.iloc[j].values
 
-    for index, row in sub.iterrows():
-        p = float(row[1])
-        n = float(row[2])
-        row_tot = p + n
+        distance = round(np.linalg.norm(x-y), 2)
 
-        I = -(p / row_tot)*(cmath.log(p/row_tot, 2)) - \
-            (n / row_tot)*(cmath.log(n/row_tot, 2))
-        print(f'{list(row)},{round(I.real, 3)}')
+        x = tuple(x)
+        y = tuple(y)
+        if distance > 0:
+            vals = [x, y, distance]
+            df.append(vals)
+
+
+dists = pd.DataFrame(df, columns=['x', 'y', 'Distance'])
+
+sorted_dists = dists.sort_values(by=['Distance'])
+print(sorted_dists)

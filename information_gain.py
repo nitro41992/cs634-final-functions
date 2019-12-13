@@ -5,7 +5,7 @@ import csv
 import pandas as pd
 
 
-data = pd.read_csv('data.txt', header=None)
+data = pd.read_csv('ig_data.txt', header=None)
 features = data[0].unique()
 # print(features)
 
