@@ -1,0 +1,7 @@
+D1,Behavior,Child,Therapy
+D2,Dream,Psychology
+D3,Child,Psychology,Therapy
+D4,Behavior,Dream,Psychology
+D5,Child,Dream,Psychology,Therapy
+D6,Dream,Therapy
+D7,Behavior,Child,Psychology
