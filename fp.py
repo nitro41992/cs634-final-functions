@@ -24,7 +24,7 @@ class treeNode:
 # display tree in text. Useful for debugging
 
     def disp(self, ind=1):
-        print('  '*ind, self.name, ' ', self.count)
+        print('     '*ind, self.name, '...', self.count)
         for child in self.children.values():
             child.disp(ind+1)
 
@@ -106,11 +106,11 @@ simpDat = data
 # simpDat = loadSimpDat()
 # print(simpDat)
 initSet = createInitSet(simpDat)
-print(initSet)
+# print(initSet)
 
-
-myFPtree, myHeaderTab = createTree(initSet, 3)
-myFPtree.disp()
+support = 3
+myFPtree, myHeaderTab = createTree(initSet, support)
+# myFPtree.disp()
 
 
 def ascendTree(leafNode, prefixPath):  # ascends from leaf node to root
@@ -128,3 +128,13 @@ def findPrefixPath(basePat, treeNode):  # treeNode comes from header table
             condPats[frozenset(prefixPath[1:])] = treeNode.count
         treeNode = treeNode.nodeLink
     return condPats
+
+
+# # print(data)
+# # temp = {k[0]: k[1:] for k in data}
+# # unique_data = list(dict.fromkeys(temp))
+# print(myHeaderTab.keys())
+
+for k in list(myHeaderTab.keys()):
+    if findPrefixPath(k, myHeaderTab[k][1]):
+        print(f'{k} {findPrefixPath(k, myHeaderTab[k][1])}')
