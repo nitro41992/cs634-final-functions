@@ -1,9 +1,6 @@
-# variables:
-# name of the node, a count
-# nodelink used to link similar items
-# parent vaiable used to refer to the parent of the node in the tree
-# node contains an empty dictionary for the children in the node
 import csv
+from collections import Counter
+
 
 with open('fp_data copy.txt', "rt", encoding='utf8') as f:
     reader = csv.reader(f)
@@ -110,7 +107,8 @@ initSet = createInitSet(simpDat)
 
 support = 3
 myFPtree, myHeaderTab = createTree(initSet, support)
-# myFPtree.disp()
+print('FP-Tree:\n')
+myFPtree.disp()
 
 
 def ascendTree(leafNode, prefixPath):  # ascends from leaf node to root
@@ -125,7 +123,7 @@ def findPrefixPath(basePat, treeNode):  # treeNode comes from header table
         prefixPath = []
         ascendTree(treeNode, prefixPath)
         if len(prefixPath) > 1:
-            condPats[frozenset(prefixPath[1:])] = treeNode.count
+            condPats[tuple(prefixPath[1:])] = treeNode.count
         treeNode = treeNode.nodeLink
     return condPats
 
@@ -136,5 +134,29 @@ def findPrefixPath(basePat, treeNode):  # treeNode comes from header table
 # print(myHeaderTab.keys())
 
 for k in list(myHeaderTab.keys()):
+    print(f'-----{k}-----')
     if findPrefixPath(k, myHeaderTab[k][1]):
-        print(f'{k} {findPrefixPath(k, myHeaderTab[k][1])}')
+        print(f'Conditional Patterns of {k}:')
+        cp = findPrefixPath(k, myHeaderTab[k][1])
+        print(f'{k} {cp}')
+        # flat_cp = [element for tupl in cp for element in tupl]
+        # counts = dict(Counter(flat_cp))
+
+    sets = []
+    for m, n in cp.items():
+        count = m*n
+        sets.append(count)
+
+    flat_cp = [element for tupl in sets for element in tupl]
+    counts = dict(Counter(flat_cp))
+
+    print(f'{k}\'s condtional FP-Tree:')
+    pats = []
+    for m, n in counts.items():
+        if n >= support:
+            row = {m: n}
+            pats.append(row)
+    if pats:
+        print(f'({pats}) | {k}')
+    else:
+        print('None found')
