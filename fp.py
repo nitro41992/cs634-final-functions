@@ -170,17 +170,18 @@ for k in list(myHeaderTab.keys()):
                 k_perms.update({j: None})
                 k_perms.update({k: None})
 
-        print(f'pats: {pats}')
-        print(f'k_perms: {k_perms}')
+        # print(f'pats: {pats}')
+        # print(f'k_perms: {k_perms}')
         for s, t in pats.items():
             for j, w in k_perms.items():
                 if s in j and (w == None or t <= w):
                     k_perms[j] = t
-                if k in s and (w == None or t <= w):
-                    k_perms.update({k: t})
 
-        for u, v in k_perms.items():
-            print(f'({u}:{w})')
+        # print(k_perms)
+        print(f'Frequent Patterns of {k}:')
+        for x, z in k_perms.items():
+            x = ''.join(sorted(x))
+            print(f'({x}:{z})')
 
     else:
         print('None found')
