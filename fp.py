@@ -3,7 +3,7 @@ from collections import Counter
 import itertools as it
 from _functools import reduce
 
-with open('fp_data copy.txt', "rt", encoding='utf8') as f:
+with open('fp_data.txt', "rt", encoding='utf8') as f:
     reader = csv.reader(f)
     data = list(reader)
 

@@ -30,7 +30,8 @@ def check_support(combinations, data_list, min_supp):
         row = 0
         if match_count > 0:
             # Support calculation based on matches.
-            support = match_count
+            # support = match_count
+            support = round((match_count / data_size) * 100, 2)
 
             row = {comb: support}
             if support >= min_supp:
@@ -46,9 +47,9 @@ def apriori(filename, min_supp, min_conf):
         reader = csv.reader(f)
         temp = list(reader)
 
-    data_list = []
-    for row in temp:
-        data_list.append(row[1:])
+    data_list = temp
+    # for row in temp:
+    #     data_list.append(row[1:])
 
     # Use dictionary to identify unique data for permutation calculation
     data = []
@@ -162,7 +163,7 @@ while True:
         if(os.path.exists(filename) == False):
             print('The file you selected does not exist, please try again')
             continue
-        min_supp = int(input('Enter the minimum support value: '))
+        min_supp = int(input('Enter the minimum support value (0 - 100%): '))
         min_conf = int(
             input('Enter the minimum confidence value (0 - 100%): '))
     except ValueError:
