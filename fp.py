@@ -144,7 +144,7 @@ for k in list(myHeaderTab.keys()):
 
         flat_cp = [element for tupl in sets for element in tupl]
         counts = dict(Counter(flat_cp))
-
+        
         print(f'{k}\'s condtional FP-Tree:')
         pats = {}
         for m, n in counts.items():
@@ -154,17 +154,19 @@ for k in list(myHeaderTab.keys()):
             print(f'({pats}) | {k}')
         else:
             print('None found')
-
+        
+        k_perms = {}
         for q, r in myHeaderTab.items():
             if q == k:
                 pats.update({k: r[0]})
+                k_perms.update({k: r[0]})
 
         perms = []
         for i in range(2, len(pats.keys()) + 1):
             perms.append(tuple(it.combinations(pats.keys(), i)))
             flat_perms = [element for tupl in perms for element in tupl]
 
-        k_perms = {}
+        
         for j in flat_perms:
             if k in j:
                 k_perms.update({j: None})
