@@ -182,7 +182,6 @@ for k in list(myHeaderTab.keys()):
         # print(k_perms)
         print(f'Frequent Patterns of {k}:')
         for x, z in k_perms.items():
-            x = ''.join(sorted(x))
             print(f'({x}:{z})')
 
     else:
