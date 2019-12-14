@@ -1,6 +1,7 @@
 import csv
 from collections import Counter
-
+import itertools as it
+from _functools import reduce
 
 with open('fp_data copy.txt', "rt", encoding='utf8') as f:
     reader = csv.reader(f)
@@ -82,16 +83,6 @@ def createTree(dataSet, minSup=1):  # create FP-tree from dataset but don't mine
     return retTree, headerTable  # return tree and header table
 
 
-# def loadSimpDat():
-#     simpDat = [['r', 'z', 'h', 'j', 'p'],
-#                ['z', 'y', 'x', 'w', 'v', 'u', 't', 's'],
-#                ['z'],
-#                ['r', 'x', 'n', 'o', 's'],
-#                ['y', 'r', 'x', 'z', 'q', 't', 'p'],
-#                ['y', 'z', 'x', 'e', 'q', 's', 't', 'm']]
-#     return simpDat
-
-
 def createInitSet(dataSet):
     retDict = {}
     for trans in dataSet:
@@ -128,10 +119,14 @@ def findPrefixPath(basePat, treeNode):  # treeNode comes from header table
     return condPats
 
 
+# def contains(w, t):
+#     return any(w == e[0] for e in t)
+
 # # print(data)
 # # temp = {k[0]: k[1:] for k in data}
 # # unique_data = list(dict.fromkeys(temp))
 # print(myHeaderTab.keys())
+
 
 for k in list(myHeaderTab.keys()):
     print(f'-----{k}-----')
@@ -142,21 +137,50 @@ for k in list(myHeaderTab.keys()):
         # flat_cp = [element for tupl in cp for element in tupl]
         # counts = dict(Counter(flat_cp))
 
-    sets = []
-    for m, n in cp.items():
-        count = m*n
-        sets.append(count)
+        sets = []
+        for m, n in cp.items():
+            count = m*n
+            sets.append(count)
 
-    flat_cp = [element for tupl in sets for element in tupl]
-    counts = dict(Counter(flat_cp))
+        flat_cp = [element for tupl in sets for element in tupl]
+        counts = dict(Counter(flat_cp))
 
-    print(f'{k}\'s condtional FP-Tree:')
-    pats = []
-    for m, n in counts.items():
-        if n >= support:
-            row = {m: n}
-            pats.append(row)
-    if pats:
-        print(f'({pats}) | {k}')
+        print(f'{k}\'s condtional FP-Tree:')
+        pats = {}
+        for m, n in counts.items():
+            if n >= support:
+                pats.update({m: n})
+        if pats:
+            print(f'({pats}) | {k}')
+        else:
+            print('None found')
+
+        for q, r in myHeaderTab.items():
+            if q == k:
+                pats.update({k: r[0]})
+
+        perms = []
+        for i in range(2, len(pats.keys()) + 1):
+            perms.append(tuple(it.combinations(pats.keys(), i)))
+            flat_perms = [element for tupl in perms for element in tupl]
+
+        k_perms = {}
+        for j in flat_perms:
+            if k in j:
+                k_perms.update({j: None})
+                k_perms.update({k: None})
+
+        print(f'pats: {pats}')
+        print(f'k_perms: {k_perms}')
+        for s, t in pats.items():
+            for j, w in k_perms.items():
+                if s in j and (w == None or t <= w):
+                    k_perms[j] = t
+                if k in s and (w == None or t <= w):
+                    k_perms.update({k: t})
+
+        for u, v in k_perms.items():
+            print(f'({u}:{w})')
+
     else:
         print('None found')
